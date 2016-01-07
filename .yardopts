@@ -1,0 +1,4 @@
+--readme README.md
+--title 'RAIS ECS Utility Library'
+--markup markdown
+'lib/**/*.rb' - '*.md'
