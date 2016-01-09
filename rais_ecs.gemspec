@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'rais_ecs'
-  s.version     = '0.3.0'
-  s.date        = '2015-01-05'
+  s.version     = '0.3.1'
+  s.date        = '2015-01-09'
   s.summary     = "RAIS ECS utility library"
   s.description = "RAIS ECS utility library"
   s.authors     = ["Brett Haranin"]

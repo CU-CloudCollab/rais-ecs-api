@@ -77,7 +77,7 @@ class RaisEcs::EcsManager
     # build port mappings
     port_mappings = []
     definition_detail.task_definition.container_definitions[0].port_mappings.each do |mapping|
-      port_mappings << RaisEcs::ContainerPortMapping.new(mapping.container_port,mapping.host_port,mapping.protocol)
+      port_mappings << RaisEcs::ContainerPortMapping.new(mapping.host_port,mapping.container_port,mapping.protocol)
     end
 
     # build environment variables
