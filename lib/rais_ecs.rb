@@ -2,7 +2,6 @@ require "aws-sdk"
 require "docker-api"
 require "json"
 require "rest-client"
-require "yard"
 require "time"
 
 module RaisEcs
