@@ -87,8 +87,15 @@ class RaisEcs::Node
   end
 
   # get node launch date
+  # @return [Time] Date/time that the instance was launched
   def get_node_launch_dt
     return @ec2_description.reservations[0].instances[0].launch_time
+  end
+
+  # get node availability zone
+  # @return [String] Node placement availability zone
+  def get_node_availability_zone
+    return @ec2_description.reservations[0].instances[0].placement.availability_zone
   end
 
 end
