@@ -74,7 +74,7 @@ class RaisEcs::Cluster
 
     node_array = []
     @instances.container_instance_arns.each do |instance_arn|
-      node_array << RaisEcs::Node.new({cloud: @cloud, cluster: @name, node_identifier: instance_arn})
+      node_array << RaisEcs::Node.new({cloud: @cloud, cluster: self, node_identifier: instance_arn})
     end
 
     return node_array
