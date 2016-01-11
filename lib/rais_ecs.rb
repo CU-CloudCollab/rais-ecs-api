@@ -5,6 +5,7 @@ require "rest-client"
 require "time"
 
 module RaisEcs
+  require 'rais_ecs/auto_scaling_group'
   require 'rais_ecs/cloud'
   require 'rais_ecs/cluster'
   require 'rais_ecs/container_config'

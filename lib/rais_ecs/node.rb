@@ -22,9 +22,11 @@ class RaisEcs::Node
     @ecs = @cloud.get_ecs_client
     @ec2 = @cloud.get_ec2_client
     @cw  = @cloud.get_cw_client
+    @as  = @cloud.get_as_client
 
     @instance_details = self.get_describe_container_instances_response
     @ec2_description = self.get_describe_instances_response
+    @scaling_group_details = self.get_describe_auto_scaling_instances
 
   end
 
@@ -54,6 +56,19 @@ class RaisEcs::Node
 
     return ec2_description
 
+  end
+
+  # Method to return instance status withing scaling group
+  # @return [Aws::AutoScaling::Types::AutoScalingInstancesType]
+
+  def get_describe_auto_scaling_instances
+
+    #http://docs.aws.amazon.com/sdkforruby/api/Aws/AutoScaling/Client.html#describe_auto_scaling_instances-instance_method
+    auto_scaling_instances = @as.describe_auto_scaling_instances({
+      instance_ids: [self.get_node_instance_id],
+    })
+
+    return auto_scaling_instances
   end
 
   # get the node Identifier
@@ -96,6 +111,41 @@ class RaisEcs::Node
   # @return [String] Node placement availability zone
   def get_node_availability_zone
     return @ec2_description.reservations[0].instances[0].placement.availability_zone
+  end
+
+  # is node part of an autoscaling group?
+  # @return [Boolean] Is node part of an auto-scaling group?
+
+  def is_in_autoscaling_group
+
+    if @scaling_group_details.auto_scaling_instances.length > 0
+      return true
+    end
+
+    return false
+  end
+
+  # get node auto-scaling group name
+  # @return [String]
+
+  def get_autoscaling_group_name
+    if self.is_in_autoscaling_group
+        return @scaling_group_details.auto_scaling_instances[0].auto_scaling_group_name
+    else
+      return nil
+    end
+
+  end
+
+  # get the auto scale group this node belongs to
+  # @return [RaisEcs::AutoScalingGroup]
+  def get_autoscaling_group
+
+    return RaisEcs::AutoScalingGroup.new({
+      cloud: @cloud,
+      auto_scaling_group_name: self.get_autoscaling_group_name
+    })
+
   end
 
 end

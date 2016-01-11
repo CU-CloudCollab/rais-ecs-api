@@ -17,6 +17,7 @@ class RaisEcs::Cloud
     @ecs = Aws::ECS::Client.new(region: @region)
     @ec2 = Aws::EC2::Client.new(region: @region)
     @cw  = Aws::CloudWatch::Client.new(region: @region)
+    @as  = Aws::AutoScaling::Client.new(region: @region)
   end
 
   # get an instance of an AWS ECS API client
@@ -38,6 +39,13 @@ class RaisEcs::Cloud
 
   def get_cw_client
     return @cw
+  end
+
+  # get an instance of an AWS AutoScaling API client
+  # @return [Aws::AutoScaling::Client] Authenticated instance of AutoScaling API client
+
+  def get_as_client
+    return @as
   end
 
 end
