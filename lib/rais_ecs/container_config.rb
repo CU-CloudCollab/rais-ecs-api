@@ -61,7 +61,7 @@ class RaisEcs::ContainerConfig
     end
 
     if @log_settings.nil?
-      @log_settings = {"syslog-tag" => @container_name}
+      @log_settings = {"tag" => @container_name}
     end
 
   end
